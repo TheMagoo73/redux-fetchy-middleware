@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = exports = function reduxFetchy(config){
 
     return ({ dispatch }) => next => (action) => {
