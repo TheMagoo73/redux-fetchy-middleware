@@ -1,13 +1,13 @@
 'use strict';
 
-const chai = require('chai');
-const sinon = require('sinon');
-const sinonChai = require('sinon-chai');
+import chai from 'chai';
+import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
 chai.should();
 chai.use(sinonChai);
 
 
-const reduxFetchy = require('../src/index');
+import reduxFetchy from '../src/index';
 
 describe('redux-fetchy-middleware', ()=>{
 
