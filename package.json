@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/TheMagoo73/redux-fetchy-middleware.git"
   },
-  "standard":{
+  "standard": {
     "ignore": [
       "dist/**"
     ]
@@ -39,5 +39,8 @@
     "nyc": "^11.4.1",
     "sinon": "^4.4.1",
     "sinon-chai": "^2.14.0"
+  },
+  "dependencies": {
+    "isomorphic-fetch": "^2.2.1"
   }
 }
