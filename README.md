@@ -18,7 +18,26 @@ yarn add redux-fetchy-middleware
 
 ## Usage
 
+### CommonJS
+
 ```javascript
+var reduxFetchy = require('redux-fetchy-middleware').default
+```
+
+### ES modules
+
+```javascript
+import ReducFetchy from 'redux-fetchy-middleware')
+```
+
+### UMD
+
+```javascript
+var ReduxFetchy = window.ReduxThunk.default
 ```
 
 ## Configuration
+
+## License
+
+MIT
