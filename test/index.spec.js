@@ -71,6 +71,9 @@ describe('redux-fetchy-middleware', ()=>{
             fetchStub.should.have.been.called;
             fetchStub.should.have.been.calledWith('www.foo.bar');
         })
+    })
+
+    describe('dispatches status updates', ()=>{
 
         it('dispatches pending', ()=>{
             let nextSpy = sinon.spy((action)=>{});
@@ -115,6 +118,59 @@ describe('redux-fetchy-middleware', ()=>{
                     ]);                                                            
                 }
             )
+        })
+
+        it('can use custom sufixes for success', ()=>{
+            let nextSpy = sinon.spy((action)=>{});
+            let dispatchSpy = sinon.spy((action)=>{});
+            let fetchStub = sinon.spy((url)=>{return new Promise((resolve, reject)=>resolve())});
+
+            const middleware = reduxFetchy({fetcher: fetchStub, pendingSuffix: 'FOO', resolvedSuffix: 'BAR'});
+            return middleware({ dispatch: dispatchSpy })(nextSpy)({type: 'GET_DATA', meta: {fetch: true}, payload: {url: 'www.foo.bar'}}).then(
+                ()=>{
+                    Promise.all([
+                        dispatchSpy.should.have.been.calledTwice,
+                        dispatchSpy.firstCall.should.have.been.calledWith({type: 'GET_DATA_FOO'}),
+                        dispatchSpy.secondCall.should.have.been.calledWith({type: 'GET_DATA_BAR'})
+                    ]);                                                            
+                }
+            )
+        })
+
+        it('can use custom sufixes for failure', ()=>{
+            let nextSpy = sinon.spy((action)=>{});
+            let dispatchSpy = sinon.spy((action)=>{});
+            let fetchStub = sinon.spy((url)=>{return new Promise((resolve, reject)=>reject())});
+
+            const middleware = reduxFetchy({fetcher: fetchStub, pendingSuffix: 'FOO', rejectedSuffix: 'BAR'});
+            return middleware({ dispatch: dispatchSpy })(nextSpy)({type: 'GET_DATA', meta: {fetch: true}, payload: {url: 'www.foo.bar'}}).then(
+                ()=>{
+                    Promise.all([
+                        dispatchSpy.should.have.been.calledTwice,
+                        dispatchSpy.firstCall.should.have.been.calledWith({type: 'GET_DATA_FOO'}),
+                        dispatchSpy.secondCall.should.have.been.calledWith({type: 'GET_DATA_BAR'})
+                    ]);                                                            
+                }
+            )
+        })
+    })
+
+    describe('can fetch', ()=>{
+
+        it('fetches from the correct url', ()=>{
+            let nextSpy = sinon.spy((action)=>{});
+            let dispatchSpy = sinon.spy((action)=>{});
+            let fetchSpy = sinon.spy((url)=>{return new Promise((resolve, reject)=>reject())});
+
+            const middleware = reduxFetchy({fetcher: fetchSpy});
+            return middleware({ dispatch: dispatchSpy })(nextSpy)({type: 'GET_DATA', meta: {fetch: true}, payload: {url: 'www.foo.bar'}}).then(
+                ()=>{
+                    Promise.all([
+                        fetchSpy.should.have.been.calledOnce,
+                        fetchSpy.firstCall.should.have.been.calledWith('www.foo.bar')
+                    ]);                                                            
+                }
+            )            
         })
 
     })
