@@ -1,0 +1,76 @@
+{
+  "name": "redux-fetchy-middleware",
+  "version": "1.0.0",
+  "description": "Fetch wrapping middleware for Redux",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rimraf lib dist es",
+    "build": "npm run build:commonjs && npm run build:umd && npm run build:umd:min && npm run build:es",
+    "prepublish": "npm run clean && npm run test && npm run build",
+    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
+    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
+    "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack",
+    "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack",
+    "test": "nyc --report=lcov --reporter=text cross-env BABEL_ENV=commonjs mocha --recursive --compilers js:babel-core/register",
+    "coverage": "cat ./coverage/lcov.info ~| coveralls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheMagoo73/redux-fetchy-middleware.git"
+  },
+  "standard": {
+    "ignore": [
+      "dist/**"
+    ]
+  },
+  "keywords": [
+    "redux",
+    "fetch",
+    "middleware"
+  ],
+  "author": "themagoo@hotmail.co.uk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TheMagoo73/redux-fetchy-middleware/issues"
+  },
+  "homepage": "https://github.com/TheMagoo73/redux-fetchy-middleware#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^5.0.0-beta4",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-check-es2015-constants": "^6.6.5",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.5.2",
+    "babel-plugin-transform-es2015-block-scoped-functions": "^6.6.5",
+    "babel-plugin-transform-es2015-block-scoping": "^6.6.5",
+    "babel-plugin-transform-es2015-classes": "^6.6.5",
+    "babel-plugin-transform-es2015-computed-properties": "^6.6.5",
+    "babel-plugin-transform-es2015-destructuring": "^6.6.5",
+    "babel-plugin-transform-es2015-for-of": "^6.6.0",
+    "babel-plugin-transform-es2015-function-name": "^6.5.0",
+    "babel-plugin-transform-es2015-literals": "^6.5.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.6.5",
+    "babel-plugin-transform-es2015-object-super": "^6.6.5",
+    "babel-plugin-transform-es2015-parameters": "^6.6.5",
+    "babel-plugin-transform-es2015-shorthand-properties": "^6.5.0",
+    "babel-plugin-transform-es2015-spread": "^6.6.5",
+    "babel-plugin-transform-es2015-sticky-regex": "^6.5.0",
+    "babel-plugin-transform-es2015-template-literals": "^6.6.5",
+    "babel-plugin-transform-es2015-unicode-regex": "^6.5.0",
+    "babel-plugin-transform-es3-member-expression-literals": "^6.5.0",
+    "babel-plugin-transform-es3-property-literals": "^6.5.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "coveralls": "^3.0.0",
+    "cross-env": "^1.0.7",
+    "mocha": "^5.0.1",
+    "nyc": "^11.4.1",
+    "rimraf": "^2.5.2",
+    "sinon": "^4.4.1",
+    "sinon-chai": "^2.14.0",
+    "webpack": "^1.12.14"
+  },
+  "dependencies": {
+    "isomorphic-fetch": "^2.2.1"
+  }
+}
