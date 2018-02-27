@@ -31,7 +31,9 @@ function reduxFetchy(config){
         dispatch({type: `${type}_${pendingSuffix}`});
 
         return fetcher(url).then(
-            ()=>{dispatch({type: `${type}_${resolvedSuffix}`})},
+            (response)=>{
+                dispatch({type: `${type}_${resolvedSuffix}`, payload: response})
+            },
             ()=>{dispatch({type: `${type}_${rejectedSuffix}`})}
         );
     }
