@@ -197,5 +197,22 @@ describe('redux-fetchy-middleware', ()=>{
             )            
         })
 
+        it('passes options to Fetch', ()=>{
+            let nextSpy = sinon.spy((action)=>{});
+            let dispatchSpy = sinon.spy((action)=>{});
+            let fetchSpy = 
+                sinon.spy((url)=>{return new Promise(resolve=>resolve())});
+
+            const middleware = reduxFetchy({fetcher: fetchSpy, fetchOptions: {rab: 'oof'}});
+            return middleware({ dispatch: dispatchSpy })(nextSpy)({type: 'GET_DATA', meta: {fetch: true}, payload: {url: 'www.foo.bar', fetchOptions:{foo: 'bar'}}}).then(
+                ()=>{
+                    Promise.all([
+                        fetchSpy.should.have.been.calledWith(sinon.match.any, sinon.match.has('foo', 'bar')),
+                        fetchSpy.should.have.been.calledWith(sinon.match.any, sinon.match.has('rab', 'oof'))
+                    ]);                                                            
+                }
+            )                    
+        })
+
     })
 })

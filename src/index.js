@@ -11,7 +11,7 @@ const defaults = {
 
 function reduxFetchy(config){
 
-    const baseConfig = Object.assign(defaults, config);
+    const baseConfig = Object.assign({}, defaults, config);
 
     return ({ dispatch }) => next => (action) => {
         if(!action || !action.payload) {
@@ -28,9 +28,11 @@ function reduxFetchy(config){
 
         const {pendingSuffix, resolvedSuffix, rejectedSuffix, fetcher} = baseConfig;
 
+        const finalFetchOptions = Object.assign({}, baseConfig.fetchOptions, fetchOptions);
+
         dispatch({type: `${type}_${pendingSuffix}`});
 
-        return fetcher(url).then(
+        return fetcher(url, finalFetchOptions).then(
             (response)=>{
                 dispatch({type: `${type}_${resolvedSuffix}`, payload: response})
             },
@@ -39,4 +41,5 @@ function reduxFetchy(config){
     }
 }
 
+export {reduxFetchy};
 export default reduxFetchy;
