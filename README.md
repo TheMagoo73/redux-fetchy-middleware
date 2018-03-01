@@ -33,7 +33,7 @@ import ReducFetchy from 'redux-fetchy-middleware')
 ### UMD
 
 ```javascript
-var ReduxFetchy = window.ReduxThunk.default
+var ReduxFetchy = window.ReduxFetchy.default
 ```
 
 ## Configuration
