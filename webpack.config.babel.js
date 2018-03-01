@@ -38,7 +38,7 @@ export default {
   output: {
     path: path.join(__dirname, 'dist'),
     filename,
-    library: 'redux-fetchy-middleware',
+    library: 'ReduxFetchy',
     libraryTarget: 'umd',
   },
 
