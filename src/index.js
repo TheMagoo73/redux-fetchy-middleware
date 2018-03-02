@@ -24,6 +24,10 @@ function reduxFetchy(config){
             return next(action);
         }
 
+        if(meta.bubbles) {
+            next(action);
+        }
+
         const {url, fetchOptions} = payload;
 
         const {pendingSuffix, resolvedSuffix, rejectedSuffix, fetcher} = baseConfig;

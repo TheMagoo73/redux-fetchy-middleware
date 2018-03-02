@@ -71,6 +71,19 @@ describe('redux-fetchy-middleware', ()=>{
             fetchStub.should.have.been.called;
             fetchStub.should.have.been.calledWith('www.foo.bar');
         })
+
+        it('can bubble actions', ()=>{
+            let nextSpy = sinon.spy((action)=>{});
+            let dispatchSpy = sinon.spy((action)=>{});
+            let fetchStub = sinon.spy((url)=>{return new Promise(resolve=>resolve())});
+      
+            const middleware = reduxFetchy({fetcher: fetchStub});
+            middleware({dispatch: dispatchSpy})(nextSpy)({type: 'GET_DATA', meta: {fetch: true, bubbles: true}, payload: {url: 'www.foo.bar'}});
+
+            nextSpy.should.have.been.calledOnce;            
+            dispatchSpy.should.have.been.called;                        
+            fetchStub.should.have.been.called;
+        })
     })
 
     describe('dispatches status updates', ()=>{
